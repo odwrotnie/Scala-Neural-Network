@@ -300,7 +300,7 @@ class Perceptron (val layers : Array[Layer]){
 	}
 }
 
-object NeuralNetworkApp extends Application {
+object NeuralNetworkApp extends App {
 	
 	
 	def generateXOR = {
@@ -349,9 +349,9 @@ object NeuralNetworkApp extends Application {
 		perceptron.run(Array[Double](1, 1)).foreach(i =>{println(i)})
 	}
 	
-	override def main (args: Array[String]) {
+	// override def main (args: Array[String]) {
 		generateXOR
 		runXOR
-	}
+	// }
 }
 
