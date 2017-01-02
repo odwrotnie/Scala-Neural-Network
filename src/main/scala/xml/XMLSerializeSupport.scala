@@ -1,9 +1,13 @@
 package xml
 
 import neuralnetwork.Perceptron
+
+import scala.io.Codec
 import scala.xml._
 
 trait XMLSerializeSupport {
+
+  def codec = Codec.UTF8
 
   def toXml(x: Any): Elem = x match {
     case p: Perceptron =>
@@ -23,6 +27,6 @@ trait XMLSerializeSupport {
   }
 
   def saveXml(filePath: String, perceptron: Perceptron) = {
-    XML.save(filePath, toXml(perceptron), "UTF-8", true, null)
+    XML.save(filePath, toXml(perceptron), codec.name, true, null)
   }
 }

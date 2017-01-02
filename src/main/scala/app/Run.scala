@@ -11,7 +11,7 @@ object Run
   def generateXOR = {
 
     // We use a perceptron with 3 layers, the first with 5 neurons, the second with 10 and the las with only one
-    val perceptron = new Perceptron(2,Array[Int](5, 10,1))
+    val perceptron = Perceptron.create(2, 5, 10, 1)
 
     val inputs = Array[Array[Double]](
       Array[Double](0,0),
@@ -38,7 +38,7 @@ object Run
   def runXOR = {
 
     println("Loading the perceptron configuration from XOR.xml")
-    val perceptron = loadXml("XOR.xml")
+    val perceptron = loadPerceptron("XOR.xml")
 
     println("Evaluation of the inputs:")
     print("0,0 => ")

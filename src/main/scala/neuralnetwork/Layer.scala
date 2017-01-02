@@ -1,6 +1,6 @@
 package neuralnetwork
 
-class Layer(val inputNum: Int, val neurons : Array[Neuron]) {
+class Layer(val inputNum: Int, val neurons: Array[Neuron]) {
 
 	val outputs = new Array[Double](neurons.size)
 	val errors = new Array[Double](neurons.size)

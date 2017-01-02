@@ -7,7 +7,7 @@ import scala.xml._
 
 trait XMLDeserializeSupport {
 
-  def loadXml(filePath : String): Perceptron = {
+  def loadPerceptron(filePath : String): Perceptron = {
 
     val perceptronXml = XML.load(filePath)
     val layers = new ListBuffer[Layer]
@@ -25,6 +25,6 @@ trait XMLDeserializeSupport {
       layers += new Layer(inputs, neurons.toArray)
     }
 
-    new Perceptron(layers.toArray)
+    Perceptron(layers.toList)
   }
 }
