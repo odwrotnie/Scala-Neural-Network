@@ -2,7 +2,6 @@ package neuralnetwork
 
 import scala.collection.mutable._
 import scala.math.{pow, sqrt}
-import scala.xml.{Elem, XML}
 
 class Perceptron(val layers : Array[Layer]){
 
@@ -150,58 +149,5 @@ class Perceptron(val layers : Array[Layer]){
 		var buf = new StringBuilder
 		layers.foreach { layer => buf.append(layer.toString) }
 		buf.toString
-	}
-
-	def toXml() : Elem = {
-
-		val perceptronXml =
-		<perceptron layers={layers.size.toString}>
-			{for (layer <- layers) yield
-				<layer inputs={layer.inputNum.toString} neurons={layer.neurons.size.toString}>
-					{for (neuron <- layer.neurons) yield
-						<neuron inputs={neuron.weights.size.toString}>
-							{for (weight <- neuron.weights) yield
-								<weight>{weight.toString}</weight>
-								}
-						</neuron>
-					}
-				</layer>
-			}
-		</perceptron>
-
-		return perceptronXml
-	}
-
-	def saveXml(filePath : String) = {
-		XML.save(filePath, toXml(), "UTF-8", true, null)
-	}
-}
-
-object Perceptron {
-
-	def loadXml(filePath : String) : Perceptron = {
-
-		val perceptronXml = XML.load(filePath)
-		val layers = new ListBuffer[Layer]
-
-		for(layerXml <- perceptronXml \\ "layer") {
-			val neurons = new ListBuffer[Neuron]
-			val inputs : Int = (layerXml \ "@inputs").text.toInt
-
-			for(neuronXml <- layerXml \\ "neuron") {
-
-				val weights = new ListBuffer[Double]
-
-				for(weightXml <- neuronXml \\ "weight") {
-					weights += weightXml.text.toDouble
-				}
-
-				neurons += new Neuron(weights.toArray)
-			}
-
-			layers += new Layer(inputs, neurons.toArray)
-		}
-
-		new Perceptron(layers.toArray)
 	}
 }

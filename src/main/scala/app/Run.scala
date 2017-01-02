@@ -1,9 +1,12 @@
 package app
 
 import neuralnetwork.Perceptron
+import xml.{XMLDeserializeSupport, XMLSerializeSupport}
 
 object Run
-  extends App {
+  extends App
+  with XMLSerializeSupport
+  with XMLDeserializeSupport {
 
   def generateXOR = {
 
@@ -29,13 +32,13 @@ object Run
     }
 
     println("Saving the perceptron configuration in XOR.xml")
-    perceptron.saveXml("XOR.xml")
+    saveXml("XOR.xml", perceptron)
   }
 
   def runXOR = {
 
     println("Loading the perceptron configuration from XOR.xml")
-    val perceptron = Perceptron.loadXml("XOR.xml")
+    val perceptron = loadXml("XOR.xml")
 
     println("Evaluation of the inputs:")
     print("0,0 => ")
