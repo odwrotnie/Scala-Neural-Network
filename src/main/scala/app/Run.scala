@@ -54,8 +54,6 @@ object Run
     perceptron.run(Array[Double](1, 1)).foreach(i =>{println(i)})
   }
 
-  // override def main (args: Array[String]) {
   generateXOR
   runXOR
-  // }
 }
