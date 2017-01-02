@@ -11,7 +11,7 @@ object Run
   def generateXOR = {
 
     // We use a perceptron with 3 layers, the first with 5 neurons, the second with 10 and the las with only one
-    val perceptron = Perceptron.create(2, 5, 10, 1)
+    val perceptron = Perceptron(2, 5, 10, 1)
 
     val inputs = Array[Array[Double]](
       Array[Double](0,0),

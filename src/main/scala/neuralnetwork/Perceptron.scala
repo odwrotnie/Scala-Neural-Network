@@ -8,20 +8,16 @@ object Perceptron {
     * @param layerNumbers first number is the number of inputs
     * @return
     */
-  def create(layerNumbers: Int*): Perceptron = {
-    val layers: List[Layer] = layerNumbers.sliding(2).map { inputCountAndNeuronCount =>
-      val input = inputCountAndNeuronCount(0)
-      val neurons = inputCountAndNeuronCount(1)
-      new Layer(input, neurons)
-    }.toList
-    Perceptron(layers = layers)
+  def apply(layerNumbers: Int*): Perceptron = {
+    val layers: List[Layer] = layerNumbers.sliding(2).toList.map(l => Layer(l(0), l(1)))
+    new Perceptron(layers = layers)
   }
 }
 
-case class Perceptron(layers: List[Layer]) {
+class Perceptron(val layers: List[Layer]) {
 
   def run(inputs: Array[Double]) : Array[Double] = {
-    require(inputs.length == layers.head.inputNum)
+    require(inputs.length == layers.head.inputs)
     layers.foldLeft(inputs)((in, layer) => {
       layer.run(in)
       layer.outputs

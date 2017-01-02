@@ -25,6 +25,6 @@ trait XMLDeserializeSupport {
       layers += new Layer(inputs, neurons.toArray)
     }
 
-    Perceptron(layers.toList)
+    new Perceptron(layers.toList)
   }
 }
