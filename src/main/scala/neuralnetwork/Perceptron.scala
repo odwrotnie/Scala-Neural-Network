@@ -4,7 +4,10 @@ import scala.collection.mutable._
 import scala.math._
 
 object Perceptron {
-
+  /**
+    * @param layerNumbers first number is the number of inputs
+    * @return
+    */
   def create(layerNumbers: Int*): Perceptron = {
     val layers: List[Layer] = layerNumbers.sliding(2).map { inputCountAndNeuronCount =>
       val input = inputCountAndNeuronCount(0)
@@ -17,20 +20,12 @@ object Perceptron {
 
 case class Perceptron(layers: List[Layer]) {
 
-  def run (inputs: Array[Double]) : Array[Double] = {
-
-    //The inputs for the first layer are the perceptron inputs
-    var layerInput = inputs
-
-    layers.indices foreach { i =>
-      //Calculates the outputs of the layer
-      layers(i).run(layerInput)
-      //The outputs are the inputs for the next layer
-      layerInput = layers(i).outputs
-    }
-
-    //returns the outputs of the last layer
-    return layerInput
+  def run(inputs: Array[Double]) : Array[Double] = {
+    require(inputs.size == layers.head.inputNum)
+    layers.foldLeft(inputs)((in, layer) => {
+      layer.run(in)
+      layer.outputs
+    })
   }
 
   def learn (inputs: Array[Double], outputs: Array[Double]) : Double = {
