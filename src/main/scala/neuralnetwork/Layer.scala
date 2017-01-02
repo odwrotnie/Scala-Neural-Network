@@ -8,7 +8,7 @@ class Layer(val inputNum: Int, val neurons: Array[Neuron]) {
 
 	def this(inputNum: Int, neuronNum: Int) = {
 		//The last neuron inputs are used for the biais
-		this(inputNum, Array.fill(neuronNum)(new Neuron(inputNum + 1)))
+		this(inputNum, Array.fill(neuronNum)(Neuron.create(inputNum + 1)))
 	}
 
 	def run (inputs: Array[Double]) = {
@@ -17,13 +17,5 @@ class Layer(val inputNum: Int, val neurons: Array[Neuron]) {
 		}
 	}
 
-	override def toString() : String = {
-		var buf = new StringBuilder("[")
-		neurons.foreach { neuron =>
-			buf.append(neuron)
-			buf.append(",")
-		}
-		buf.append("\n]\n")
-		buf.toString
-	}
+	override def toString() : String = neurons.mkString("[", ", ", "]")
 }

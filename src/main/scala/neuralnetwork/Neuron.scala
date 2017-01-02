@@ -2,17 +2,20 @@ package neuralnetwork
 
 import scala.math.random
 
-class Neuron (val weights: Array[Double]){
+object Neuron {
+
+  val WEIGHT_RANGE = 2.4
+
+  def create(inputs: Int): Neuron = {
+    Neuron(Array.fill(inputs)(random * (WEIGHT_RANGE * 2) - WEIGHT_RANGE))
+  }
+}
+
+case class Neuron(weights: Array[Double]) {
 
   import Sigmoid.eval
 
   val pastErrors = new Array[Double](weights.size)
-
-  def this (inputNum: Int) = {
-
-    //Use [-2.4, 2.4] as initial weight range
-    this(Array.fill(inputNum)(random * (2.4 *2)- 2.4))
-  }
 
   def run(inputs: Array[Double]) : Double = {
 

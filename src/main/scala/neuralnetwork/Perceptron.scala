@@ -21,14 +21,14 @@ object Perceptron {
 case class Perceptron(layers: List[Layer]) {
 
   def run(inputs: Array[Double]) : Array[Double] = {
-    require(inputs.size == layers.head.inputNum)
+    require(inputs.length == layers.head.inputNum)
     layers.foldLeft(inputs)((in, layer) => {
       layer.run(in)
       layer.outputs
     })
   }
 
-  def learn (inputs: Array[Double], outputs: Array[Double]) : Double = {
+  def learn(inputs: Array[Double], outputs: Array[Double]) : Double = {
 
     val learnLevel : Double = 0.3
     val alfa : Double =  0.9
@@ -61,7 +61,8 @@ case class Perceptron(layers: List[Layer]) {
         //updates for the biais
         neuron.pastErrors(previousLayer.neurons.size) =
           -learnLevel * neuronError + alfa * neuron.pastErrors(previousLayer.neurons.size)
-        neuron.weights(previousLayer.neurons.size) = neuron.pastErrors(previousLayer.neurons.size) + neuron.weights(previousLayer.neurons.size)
+        neuron.weights(previousLayer.neurons.size) =
+          neuron.pastErrors(previousLayer.neurons.size) + neuron.weights(previousLayer.neurons.size)
       }
     }
 
