@@ -97,34 +97,29 @@ class Perceptron(val layers: List[Layer]) {
 
   def calculateErrors(inputs: Array[Double], outputs: Array[Double]): Unit = {
 
-    //For each layer from last to first
-    for (layerIndex <- layers.size - 1 to(0,-1)) {
-      //current layer
-      val layer = layers(layerIndex)
 
-      //For every neuron in the layer
-      for(neuronIndex <- 0 until layer.neurons.size){
+    val reversedLayers = layers.zipWithIndex.reverse
+    val lastLayer = reversedLayers.head._1
+    val hiddenLayers = reversedLayers.tail
 
-        //current neuron
-        val neuron = layer.neurons(neuronIndex)
-        //output for current neuron
-        val neuronOutput = layer.outputs(neuronIndex)
+    // Last factor of the error calculation
+    lastLayer.neurons.indices foreach { neuronIndex =>
+      val neuronOutput = lastLayer.outputs(neuronIndex)
+      lastLayer.errors(neuronIndex) = neuronOutput * (1 - neuronOutput) * (outputs(neuronIndex) - neuronOutput)
+    }
 
-        //Last factor of the error calculation
-        if(layerIndex == layers.size - 1){ //Last layer
-          layer.errors(neuronIndex) = neuronOutput * (1 - neuronOutput) * (outputs(neuronIndex) - neuronOutput)
-        } else { //Hidden layers
-        var tmp : Double = 0
-          for(nextNeuronIndex <- 0 until layers(layerIndex + 1).neurons.size)
-            tmp += layers(layerIndex + 1).errors(nextNeuronIndex) * layers(layerIndex + 1).neurons(nextNeuronIndex).weights(neuronIndex)
+    // Hidden layers
 
-          layer.errors(neuronIndex) = neuronOutput * (1 - neuronOutput) * tmp
-        }
-        //Calculate the cumulated error of the layer
-        //layer.cumulatedError =
-        //	neuron.weights.reduceLeft( _ + layer.errors(neuronIndex) * _)
-      }
-
+    for {
+      (layer, layerIndex) <- hiddenLayers
+      (neuron, neuronIndex) <- layer.neurons.zipWithIndex
+    } {
+      val neuronOutput: Double = layer.outputs(neuronIndex)
+      val nextLayer = layers(layerIndex + 1)
+      val tmp = nextLayer.neurons.zipWithIndex.map {
+        case (nextNeuron, index) => nextLayer.errors(index) * nextNeuron.weights(neuronIndex)
+      }.sum
+      layer.errors(neuronIndex) = neuronOutput * (1 - neuronOutput) * tmp
     }
   }
 
