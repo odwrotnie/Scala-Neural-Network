@@ -15,28 +15,12 @@ case class Neuron(weights: Array[Double]) {
 
   import Sigmoid.eval
 
-  val pastErrors = new Array[Double](weights.size)
+  val pastErrors = new Array[Double](weights.length)
 
-  def run(inputs: Array[Double]) : Double = {
-
-    //TODO: More functional style
-    var cumul : Double = 0d
-    for(i <- 0 until inputs.size){
-      cumul += inputs(i) * weights(i)
-    }
+  def run(inputs: Array[Double]): Double = {
+    val cumul: Double = inputs.zip(weights).map(l => l._1 * l._2).sum
     eval(cumul)
   }
 
-  override def toString() : String = {
-
-    var buf = new StringBuilder("\n\t(")
-    for(i <- weights.indices){
-      buf.append("w")
-      buf.append(i)
-      buf.append(":")
-      buf.append(weights(i))
-      buf.append(", ")
-    }
-    return buf + ")"
-  }
+  override def toString: String = weights.map(d => f"$d%.3f").mkString("N(", ", ", ")")
 }

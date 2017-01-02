@@ -9,16 +9,16 @@ object Layer {
 
 class Layer(val inputs: Int, val neurons: Array[Neuron]) {
 
-	val outputs = new Array[Double](neurons.size)
-	val errors = new Array[Double](neurons.size)
-	var cumulatedError: Double = _
+	val outputs = new Array[Double](neurons.length)
+	val errors = new Array[Double](neurons.length)
+	def cumulatedError: Double = errors.sum
 
-	def run(inputs: Array[Double]) = {
+	def run(inputs: Array[Double]): Unit = {
     require(inputs.length == this.inputs)
-		for(i <- 0 until outputs.size) {
+    outputs.indices foreach { i =>
 			outputs(i) = neurons(i).run(inputs)
 		}
 	}
 
-	override def toString() : String = neurons.mkString("[", ", ", "]")
+	override def toString: String = neurons.mkString("[\n - ", "\n - ", "\n]")
 }

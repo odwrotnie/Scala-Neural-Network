@@ -95,7 +95,7 @@ class Perceptron(val layers: List[Layer]) {
     sqrt(cumul)
   }
 
-  def calculateErrors (inputs: Array[Double], outputs: Array[Double]) = {
+  def calculateErrors(inputs: Array[Double], outputs: Array[Double]): Unit = {
 
     //For each layer from last to first
     for (layerIndex <- layers.size - 1 to(0,-1)) {
@@ -128,9 +128,7 @@ class Perceptron(val layers: List[Layer]) {
     }
   }
 
-  override def toString() : String = {
-    var buf = new StringBuilder
-    layers.foreach { layer => buf.append(layer.toString) }
-    buf.toString
-  }
+  override def toString: String = layers.zipWithIndex.map {
+    case (layer, index) => s"Layer $index:\n$layer"
+  } mkString("\n", "\n", "\n")
 }

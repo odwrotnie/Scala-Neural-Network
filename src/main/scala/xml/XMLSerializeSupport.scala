@@ -9,16 +9,21 @@ trait XMLSerializeSupport {
 
   def codec = Codec.UTF8
 
-  def toXml(x: Any): Elem = x match {
-    case n: Neuron =>
-      <neuron inputs={n.weights.size.toString}>{ n.weights.map(w => <weight>{ w.toString }</weight>) }</neuron>
-    case l: Layer =>
-      <layer inputs={ l.inputs.toString } neurons={ l.neurons.size.toString }>{ l.neurons.map(toXml) }</layer>
-    case p: Perceptron =>
-      <perceptron layers={ p.layers.size.toString }>{ p.layers.map(toXml) }</perceptron>
-  }
+  def toXml(n: Neuron): Elem =
+    <neuron inputs={n.weights.size.toString}>
+      { n.weights.map(w => <weight>{ w.toString }</weight>) }
+    </neuron>
 
-  def saveXml(filePath: String, perceptron: Perceptron) = {
-    XML.save(filePath, toXml(perceptron), codec.name, true, null)
-  }
+  def toXml(l: Layer): Elem =
+    <layer inputs={ l.inputs.toString } neurons={ l.neurons.length.toString }>
+      { l.neurons.map(toXml) }
+    </layer>
+
+  def toXml(p: Perceptron): Elem =
+    <perceptron layers={ p.layers.size.toString }>
+      { p.layers.map(toXml) }
+    </perceptron>
+
+  def saveXml(filePath: String, perceptron: Perceptron): Unit =
+    XML.save(filePath, toXml(perceptron), codec.name, xmlDecl = true, null)
 }
