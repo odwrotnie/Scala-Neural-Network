@@ -20,7 +20,7 @@ class Perceptron(val layers: List[Layer]) {
     require(inputs.length == layers.head.inputs)
     layers.foldLeft(inputs)((in, layer) => {
       layer.run(in)
-      layer.outputs
+      layer.neurons.map(_.output)
     })
   }
 
@@ -42,13 +42,13 @@ class Perceptron(val layers: List[Layer]) {
 
         //current neuron and error
         val neuron = layer.neurons(neuronIndex)
-        val neuronError = layer.errors(neuronIndex)
+        val neuronError = neuron.error
 
         //For every neuron in the previous layer
         for(previusNeuronIndex <- 0 until previousLayer.neurons.size){
 
           neuron.pastErrors(previusNeuronIndex) =
-            learnLevel * neuronError * previousLayer.outputs(previusNeuronIndex) +
+            learnLevel * neuronError * previousLayer.neurons(previusNeuronIndex).output +
               alfa * neuron.pastErrors(previusNeuronIndex)
 
           neuron.weights(previusNeuronIndex) = neuron.pastErrors(previusNeuronIndex) + neuron.weights(previusNeuronIndex)
@@ -68,7 +68,7 @@ class Perceptron(val layers: List[Layer]) {
 
       //current neuron and error
       val neuron = layer.neurons(neuronIndex)
-      val neuronError = layer.errors(neuronIndex)
+      val neuronError = neuron.error
 
       //For every input
       for(inputIndex <- 0 until inputs.size){
@@ -90,7 +90,7 @@ class Perceptron(val layers: List[Layer]) {
     //TODO: Use a functional style
     var cumul : Double = 0
     for (i <- 0 until outputs.size) {
-      cumul += pow(outputs(i) - layers.last.outputs(i), 2)
+      cumul += pow(outputs(i) - layers.last.neurons(i).output, 2)
     }
     sqrt(cumul)
   }
@@ -104,8 +104,9 @@ class Perceptron(val layers: List[Layer]) {
 
     // Last factor of the error calculation
     lastLayer.neurons.indices foreach { neuronIndex =>
-      val neuronOutput = lastLayer.outputs(neuronIndex)
-      lastLayer.errors(neuronIndex) = neuronOutput * (1 - neuronOutput) * (outputs(neuronIndex) - neuronOutput)
+      val neuron = lastLayer.neurons(neuronIndex)
+      val neuronOutput = neuron.output
+      neuron.error = neuronOutput * (1 - neuronOutput) * (outputs(neuronIndex) - neuronOutput)
     }
 
     // Hidden layers
@@ -114,12 +115,11 @@ class Perceptron(val layers: List[Layer]) {
       (layer, layerIndex) <- hiddenLayers
       (neuron, neuronIndex) <- layer.neurons.zipWithIndex
     } {
-      val neuronOutput: Double = layer.outputs(neuronIndex)
       val nextLayer = layers(layerIndex + 1)
       val tmp = nextLayer.neurons.zipWithIndex.map {
-        case (nextNeuron, index) => nextLayer.errors(index) * nextNeuron.weights(neuronIndex)
+        case (nextNeuron, index) => nextLayer.neurons(index).error * nextNeuron.weights(neuronIndex)
       }.sum
-      layer.errors(neuronIndex) = neuronOutput * (1 - neuronOutput) * tmp
+      neuron.error = neuron.output * (1 - neuron.output) * tmp
     }
   }
 

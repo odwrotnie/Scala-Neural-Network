@@ -10,7 +10,7 @@ trait XMLSerializeSupport {
   def codec = Codec.UTF8
 
   def toXml(n: Neuron): Elem =
-    <neuron inputs={n.weights.size.toString}>
+    <neuron index={ n.index.toString } inputs={n.weights.size.toString}>
       { n.weights.map(w => <weight>{ w.toString }</weight>) }
     </neuron>
 

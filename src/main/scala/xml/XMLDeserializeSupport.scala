@@ -16,11 +16,12 @@ trait XMLDeserializeSupport {
       val neurons = new ListBuffer[Neuron]
       val inputs : Int = (layerXml \ "@inputs").text.toInt
       for(neuronXml <- layerXml \\ "neuron") {
+        val index: Int = (neuronXml \ "@index").text.toInt
         val weights = new ListBuffer[Double]
         for(weightXml <- neuronXml \\ "weight") {
           weights += weightXml.text.toDouble
         }
-        neurons += new Neuron(weights.toArray)
+        neurons += new Neuron(index, weights.toArray)
       }
       layers += new Layer(inputs, neurons.toArray)
     }
