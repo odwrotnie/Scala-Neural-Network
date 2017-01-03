@@ -12,6 +12,7 @@ class Layer(val inputs: Int, val neurons: Array[Neuron]) {
   neurons.foreach(_.layer = this)
   var perceptron: Perceptron = _
   lazy val index: Int = perceptron.layers.indexOf(this)
+  lazy val prev: Option[Layer] = if (index > 0) Some(perceptron.layers(index - 1)) else None
   lazy val next: Option[Layer] = if (index + 1 < perceptron.layers.size) Some(perceptron.layers(index + 1)) else None
   lazy val isHidden: Boolean = next.isDefined
 

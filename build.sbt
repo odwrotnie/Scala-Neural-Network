@@ -1,4 +1,4 @@
-name := "SBT Hello Starter"
+name := "Hello Neural Network"
 
 version := "1.0"
 

@@ -31,19 +31,10 @@ class Perceptron(val layers: List[Layer]) {
     val learnLevel : Double = 0.3
     val alfa : Double =  0.9
 
-    //For all the layers but the first
-    for(layerIndex <- layers.size - 1 to(1, -1)) {
+    layers.tail.reverse foreach { layer =>
+      val previousLayer = layer.prev.get
+      layer.neurons foreach { neuron =>
 
-      //current layer
-      val layer = layers(layerIndex)
-      //previous layer
-      val previousLayer = layers(layerIndex - 1)
-
-      //For every neuron in the current layer
-      for(neuronIndex <- 0 until layer.neurons.size){
-
-        //current neuron and error
-        val neuron = layer.neurons(neuronIndex)
         val neuronError = neuron.error
 
         //For every neuron in the previous layer
@@ -97,9 +88,16 @@ class Perceptron(val layers: List[Layer]) {
     sqrt(cumul)
   }
 
+  class Synapses {
+    val errors = collection.mutable.Map[(Neuron, Neuron), Double]()
+    def setError(source: Neuron, destination: Neuron, value: Double): Unit = errors += (source, destination) -> value
+    def getError(source: Neuron, destination: Neuron): Double = errors.getOrElse((source, destination), 0d)
+  }
+
   def calculateErrors(inputs: Array[Double], outputs: Array[Double]): Unit = {
 
-    // Hidden layers
+    //    val s = new Synapses
+
     for {
       layer <- layers.reverse
       neuron <- layer.neurons
