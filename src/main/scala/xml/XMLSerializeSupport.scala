@@ -1,5 +1,8 @@
 package xml
 
+import java.io.FileOutputStream
+import java.nio.channels.Channels
+
 import neuralnetwork._
 
 import scala.io.Codec
@@ -24,6 +27,22 @@ trait XMLSerializeSupport {
       { p.layers.map(toXml) }
     </perceptron>
 
-  def saveXml(filePath: String, perceptron: Perceptron): Unit =
-    XML.save(filePath, toXml(perceptron), codec.name, xmlDecl = true, null)
+  def saveXml(filePath: String, perceptron: Perceptron): Unit = {
+    val xml = toXml(perceptron)
+    // XML.save(filePath, xml, codec.name, xmlDecl = true, null)
+    save(xml, filePath)
+  }
+
+  private def save(node: Node, fileName: String) = {
+    val pp = new PrettyPrinter(80, 2)
+    val fos = new FileOutputStream(fileName)
+    val writer = Channels.newWriter(fos.getChannel(), codec.name)
+    try {
+      writer.write(s"<?xml version='1.0' encoding='${ codec.name }'?>\n")
+      writer.write(pp.format(node))
+    } finally {
+      writer.close()
+    }
+    fileName
+  }
 }
