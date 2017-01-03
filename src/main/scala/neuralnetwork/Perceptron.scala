@@ -106,15 +106,15 @@ class Perceptron(val layers: List[Layer]) {
       layer <- layers.reverse
       neuron <- layer.neurons
     } {
-      if (layer.isHidden) {
-        val nextLayer = layer.next.get
-        val tmp = nextLayer.neurons.zipWithIndex.map {
-          case (nextNeuron, index) => nextLayer.neurons(index).error * nextNeuron.weights(neuron.index)
-        }.sum
-        neuron.error = neuron.output * (1 - neuron.output) * tmp
-      } else {
-        neuron.error = neuron.output * (1 - neuron.output) * (outputs(neuron.index) - neuron.output)
+      val nextOutput = layer.next match {
+        case Some(nextLayer) =>
+          nextLayer.neurons.zipWithIndex.map {
+            case (nextNeuron, index) => nextLayer.neurons(index).error * nextNeuron.weights(neuron.index)
+          }.sum
+        case None =>
+          outputs(neuron.index) - neuron.output
       }
+      neuron.error = neuron.output * (1 - neuron.output) * nextOutput
     }
   }
 

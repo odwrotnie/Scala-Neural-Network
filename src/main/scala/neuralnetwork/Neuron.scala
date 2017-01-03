@@ -16,6 +16,7 @@ case class Neuron(weights: Array[Double]) {
   var layer: Layer = _
   lazy val perceptron: Perceptron = layer.perceptron
   lazy val index: Int = layer.neurons.indexOf(this)
+  lazy val next: Option[Array[Neuron]] = layer.next.map(_.neurons)
 
   var output: Double = 0
   var error: Double = 0
