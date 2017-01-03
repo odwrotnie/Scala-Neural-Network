@@ -31,38 +31,37 @@ class Perceptron(val layers: List[Layer]) {
     val learnLevel : Double = 0.3
     val alfa : Double =  0.9
 
-    layers.tail.reverse foreach { layer =>
-      val previousLayer = layer.prev.get
-      layer.neurons foreach { neuron =>
-        val neuronError = neuron.error
-        previousLayer.neurons foreach { prevNeuron =>
-          neuron.pastErrors(prevNeuron.index) =
-            learnLevel * neuronError * prevNeuron.output +
-              alfa * neuron.pastErrors(prevNeuron.index)
-          neuron.weights(prevNeuron.index) = neuron.pastErrors(prevNeuron.index) + neuron.weights(prevNeuron.index)
-        }
-        // Updates for the biais
-        neuron.pastErrors(previousLayer.neurons.size) =
-          -learnLevel * neuronError + alfa * neuron.pastErrors(previousLayer.neurons.size)
-        neuron.weights(previousLayer.neurons.size) =
-          neuron.pastErrors(previousLayer.neurons.size) + neuron.weights(previousLayer.neurons.size)
+    for {
+      layer <- layers.reverse
+      neuron <- layer.neurons
+    } {
+      layer.prev match {
+        case Some(previousLayer) =>
+          val neuronError = neuron.error
+          previousLayer.neurons foreach { prevNeuron =>
+            neuron.pastErrors(prevNeuron.index) =
+              learnLevel * neuronError * prevNeuron.output +
+                alfa * neuron.pastErrors(prevNeuron.index)
+            neuron.weights(prevNeuron.index) = neuron.pastErrors(prevNeuron.index) + neuron.weights(prevNeuron.index)
+          }
+          // Updates for the biais
+          neuron.pastErrors(previousLayer.neurons.size) =
+            -learnLevel * neuronError + alfa * neuron.pastErrors(previousLayer.neurons.size)
+          neuron.weights(previousLayer.neurons.size) =
+            neuron.pastErrors(previousLayer.neurons.size) + neuron.weights(previousLayer.neurons.size)
+        case None =>
+          val neuronError = neuron.error
+          inputs.indices foreach { inputIndex =>
+            neuron.pastErrors(inputIndex) =
+              learnLevel * neuronError * inputs(inputIndex) +
+                alfa * neuron.pastErrors(inputIndex)
+            neuron.weights(inputIndex) = neuron.pastErrors(inputIndex) + neuron.weights(inputIndex)
+          }
+          // Updates for the biais
+          neuron.pastErrors(inputs.size) =
+            -learnLevel * neuronError + alfa * neuron.pastErrors(inputs.size)
+          neuron.weights(inputs.size) = neuron.pastErrors(inputs.size) + neuron.weights(inputs.size)
       }
-    }
-
-    //For the first layer
-    val layer = layers.head
-    layer.neurons foreach { neuron =>
-      val neuronError = neuron.error
-      inputs.indices foreach { inputIndex =>
-        neuron.pastErrors(inputIndex) =
-          learnLevel * neuronError * inputs(inputIndex) +
-            alfa * neuron.pastErrors(inputIndex)
-        neuron.weights(inputIndex) = neuron.pastErrors(inputIndex) + neuron.weights(inputIndex)
-      }
-      // Updates for the biais
-      neuron.pastErrors(inputs.size) =
-        -learnLevel * neuronError + alfa * neuron.pastErrors(inputs.size)
-      neuron.weights(inputs.size) = neuron.pastErrors(inputs.size) + neuron.weights(inputs.size)
     }
 
     // Calculates the quadratic error between outputs and expected values
