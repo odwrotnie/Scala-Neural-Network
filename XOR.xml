@@ -2,41 +2,41 @@
 <perceptron layers="3">
       <layer inputs="2" neurons="5">
       <neuron index="0" inputs="3">
-      <weight>4.689994164110053</weight><weight>-2.1115431885492786</weight><weight>-12.305255739815363</weight>
+      <weight>-4.148730861920625</weight><weight>-3.921177788034568</weight><weight>-10.954223219719411</weight>
     </neuron><neuron index="1" inputs="3">
-      <weight>0.18416819022678366</weight><weight>-0.12251693634345047</weight><weight>-3.9932194024317362</weight>
+      <weight>4.567674835282497</weight><weight>-1.846098340667455</weight><weight>-2.7359875960419324</weight>
     </neuron><neuron index="2" inputs="3">
-      <weight>4.767167985930133</weight><weight>4.205004122446477</weight><weight>33.64017984676985</weight>
+      <weight>2.4271591576666016</weight><weight>-5.422249713716989</weight><weight>4.46063660506814</weight>
     </neuron><neuron index="3" inputs="3">
-      <weight>2.70483550913787</weight><weight>-5.788481644319874</weight><weight>6.452634481552225</weight>
+      <weight>-2.2021729867069477</weight><weight>0.23196138868782046</weight><weight>0.11511246585624067</weight>
     </neuron><neuron index="4" inputs="3">
-      <weight>-3.869407860556715</weight><weight>1.0635685764722806</weight><weight>-4.464017550745227</weight>
+      <weight>3.088845857266599</weight><weight>3.22165215252693</weight><weight>4.300382412992011</weight>
     </neuron>
     </layer><layer inputs="5" neurons="10">
       <neuron index="0" inputs="6">
-      <weight>-2.364838149009219</weight><weight>-4.795359117871006</weight><weight>3.3408008595389718</weight><weight>3.4592324988219048</weight><weight>-0.4082400408129464</weight><weight>7.4584652312936335</weight>
+      <weight>-4.18674550068992</weight><weight>-2.970825084785414</weight><weight>2.573995314011123</weight><weight>2.0108366430696942</weight><weight>1.2618155360290388</weight><weight>0.023225936072935265</weight>
     </neuron><neuron index="1" inputs="6">
-      <weight>2.468062430098649</weight><weight>2.944474966784729</weight><weight>-1.007882670663997</weight><weight>2.937933505675359</weight><weight>-2.49010451395239</weight><weight>-0.5148307524586584</weight>
+      <weight>0.5155445995303887</weight><weight>1.5304761652937577</weight><weight>0.23504301465644017</weight><weight>-0.7052364855812405</weight><weight>2.076560992670476</weight><weight>1.5579411042699884</weight>
     </neuron><neuron index="2" inputs="6">
-      <weight>2.610941815336684</weight><weight>1.247311428435073</weight><weight>0.7856426322942403</weight><weight>2.2372831883090627</weight><weight>-1.0101260937422667</weight><weight>-2.137688690300611</weight>
+      <weight>-2.7970507407593126</weight><weight>0.5274447227037165</weight><weight>-0.9884223993153363</weight><weight>-2.4501444408948254</weight><weight>3.4273575485049483</weight><weight>-0.31903996758003433</weight>
     </neuron><neuron index="3" inputs="6">
-      <weight>-0.6039994596069109</weight><weight>0.43859545336451483</weight><weight>0.7643901241027896</weight><weight>1.637077600564019</weight><weight>0.33434437358988905</weight><weight>0.07338071745268034</weight>
+      <weight>4.822906612312013</weight><weight>-1.4217011628669698</weight><weight>1.2855105943845546</weight><weight>0.6111136253309637</weight><weight>-2.611359752598227</weight><weight>1.0974138925405716</weight>
     </neuron><neuron index="4" inputs="6">
-      <weight>0.12191605053364149</weight><weight>-0.35897635616619616</weight><weight>-4.803682241078091</weight><weight>2.6918551644535404</weight><weight>3.9870446428785633</weight><weight>-3.2568226357634105</weight>
+      <weight>1.465464704818865</weight><weight>1.0176106281896657</weight><weight>-3.202954179591395</weight><weight>-1.772127148794002</weight><weight>0.5711868424958219</weight><weight>2.5983255470968323</weight>
     </neuron><neuron index="5" inputs="6">
-      <weight>-3.8900320150001177</weight><weight>-2.1906076726386665</weight><weight>3.7846747943719743</weight><weight>2.9882380300242395</weight><weight>-2.0764109119083436</weight><weight>4.480923338908492</weight>
+      <weight>2.7847988005545488</weight><weight>2.872099429235932</weight><weight>-2.9415625805877634</weight><weight>-0.7984144706699429</weight><weight>-1.2525268430240744</weight><weight>-0.39001289049857174</weight>
     </neuron><neuron index="6" inputs="6">
-      <weight>1.3808298309091163</weight><weight>-0.3967157788222407</weight><weight>1.2283024795503779</weight><weight>-0.5207889250268658</weight><weight>-0.026508130076026752</weight><weight>-1.3891040425949317</weight>
+      <weight>1.4373789172112739</weight><weight>2.5018385539023016</weight><weight>-3.1346716194863613</weight><weight>0.6820674989271751</weight><weight>-1.0901236677423978</weight><weight>0.9431679691520617</weight>
     </neuron><neuron index="7" inputs="6">
-      <weight>1.5051727293146482</weight><weight>0.9914020866610881</weight><weight>-0.045402216170724</weight><weight>0.749955332472287</weight><weight>1.5358451660016954</weight><weight>0.11643348866963793</weight>
+      <weight>-1.0574429031346786</weight><weight>-2.776915800451499</weight><weight>2.91484705202489</weight><weight>1.9021908482657448</weight><weight>1.050032966086342</weight><weight>-1.2590387751889431</weight>
     </neuron><neuron index="8" inputs="6">
-      <weight>-1.068428075845712</weight><weight>-0.14504656532692123</weight><weight>0.39631348284507717</weight><weight>0.053724724372744684</weight><weight>0.5176017275871261</weight><weight>-2.4234738338227655</weight>
+      <weight>0.6799771421304682</weight><weight>-2.398833134284474</weight><weight>-1.9852494184751601</weight><weight>-1.65204729872059</weight><weight>-2.188785769294886</weight><weight>-0.16065961311610455</weight>
     </neuron><neuron index="9" inputs="6">
-      <weight>2.6279089334216805</weight><weight>1.2587312895965956</weight><weight>-1.557846956871715</weight><weight>-3.669678354420594</weight><weight>-0.28405661328787113</weight><weight>-3.4029437934346887</weight>
+      <weight>-1.4164253354578478</weight><weight>2.7077162110123116</weight><weight>2.2513230727756417</weight><weight>-1.2688527646067846</weight><weight>-0.07530682700822738</weight><weight>-0.542302321076796</weight>
     </neuron>
     </layer><layer inputs="10" neurons="1">
       <neuron index="0" inputs="11">
-      <weight>7.074382273230777</weight><weight>-4.429987513257201</weight><weight>-2.492404097959573</weight><weight>1.4768009302775913</weight><weight>-6.502732685018833</weight><weight>7.092873328712395</weight><weight>0.9494561346894029</weight><weight>0.12037393075226928</weight><weight>-0.03629358023499816</weight><weight>-5.622647672273012</weight><weight>1.1756881014621017</weight>
+      <weight>5.6393265992494115</weight><weight>0.29645362585213114</weight><weight>3.7789447870583848</weight><weight>-5.030002672374154</weight><weight>-3.912113392028701</weight><weight>-5.497597672999924</weight><weight>-4.2626907886435825</weight><weight>3.6557983269470173</weight><weight>2.113800671907333</weight><weight>-1.4080853548391075</weight><weight>2.906029733000564</weight>
     </neuron>
     </layer>
     </perceptron>

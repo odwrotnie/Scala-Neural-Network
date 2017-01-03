@@ -99,9 +99,7 @@ class Perceptron(val layers: List[Layer]) {
 
   def calculateErrors(inputs: Array[Double], outputs: Array[Double]): Unit = {
 
-
     // Hidden layers
-
     for {
       layer <- layers.reverse
       neuron <- layer.neurons
@@ -109,7 +107,7 @@ class Perceptron(val layers: List[Layer]) {
       val nextOutput = layer.next match {
         case Some(nextLayer) =>
           nextLayer.neurons.zipWithIndex.map {
-            case (nextNeuron, index) => nextLayer.neurons(index).error * nextNeuron.weights(neuron.index)
+            case (nextNeuron, index) => nextNeuron.error * nextNeuron.weights(neuron.index)
           }.sum
         case None =>
           outputs(neuron.index) - neuron.output
