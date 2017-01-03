@@ -21,7 +21,7 @@ trait XMLDeserializeSupport {
         for(weightXml <- neuronXml \\ "weight") {
           weights += weightXml.text.toDouble
         }
-        neurons += new Neuron(index, weights.toArray)
+        neurons += new Neuron(weights.toArray)
       }
       layers += new Layer(inputs, neurons.toArray)
     }

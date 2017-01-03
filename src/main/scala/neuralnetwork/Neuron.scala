@@ -6,12 +6,16 @@ object Neuron {
 
   val WEIGHT_RANGE = 2.4
 
-  def create(index: Int, inputs: Int): Neuron = {
-    Neuron(index, Array.fill(inputs)(random * (WEIGHT_RANGE * 2) - WEIGHT_RANGE))
+  def create(inputs: Int): Neuron = {
+    Neuron(Array.fill(inputs)(random * (WEIGHT_RANGE * 2) - WEIGHT_RANGE))
   }
 }
 
-case class Neuron(index: Int, weights: Array[Double]) {
+case class Neuron(weights: Array[Double]) {
+
+  var layer: Layer = _
+  lazy val perceptron: Perceptron = layer.perceptron
+  lazy val index: Int = layer.neurons.indexOf(this)
 
   var output: Double = 0
   var error: Double = 0

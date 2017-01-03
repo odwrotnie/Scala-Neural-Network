@@ -16,6 +16,8 @@ object Perceptron {
 
 class Perceptron(val layers: List[Layer]) {
 
+  layers.foreach(_.perceptron = this)
+
   def run(inputs: Array[Double]) : Array[Double] = {
     require(inputs.length == layers.head.inputs)
     layers.foldLeft(inputs)((in, layer) => {
@@ -98,28 +100,21 @@ class Perceptron(val layers: List[Layer]) {
   def calculateErrors(inputs: Array[Double], outputs: Array[Double]): Unit = {
 
 
-    val reversedLayers = layers.zipWithIndex.reverse
-    val lastLayer = reversedLayers.head._1
-    val hiddenLayers = reversedLayers.tail
-
-    // Last factor of the error calculation
-    lastLayer.neurons.indices foreach { neuronIndex =>
-      val neuron = lastLayer.neurons(neuronIndex)
-      val neuronOutput = neuron.output
-      neuron.error = neuronOutput * (1 - neuronOutput) * (outputs(neuronIndex) - neuronOutput)
-    }
-
     // Hidden layers
 
     for {
-      (layer, layerIndex) <- hiddenLayers
-      (neuron, neuronIndex) <- layer.neurons.zipWithIndex
+      layer <- layers.reverse
+      neuron <- layer.neurons
     } {
-      val nextLayer = layers(layerIndex + 1)
-      val tmp = nextLayer.neurons.zipWithIndex.map {
-        case (nextNeuron, index) => nextLayer.neurons(index).error * nextNeuron.weights(neuronIndex)
-      }.sum
-      neuron.error = neuron.output * (1 - neuron.output) * tmp
+      if (layer.isHidden) {
+        val nextLayer = layer.next.get
+        val tmp = nextLayer.neurons.zipWithIndex.map {
+          case (nextNeuron, index) => nextLayer.neurons(index).error * nextNeuron.weights(neuron.index)
+        }.sum
+        neuron.error = neuron.output * (1 - neuron.output) * tmp
+      } else {
+        neuron.error = neuron.output * (1 - neuron.output) * (outputs(neuron.index) - neuron.output)
+      }
     }
   }
 
